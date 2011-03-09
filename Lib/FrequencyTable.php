@@ -75,13 +75,13 @@ class FrequencyTable {
       }
       else {
         $word = $this->cleanupWord($word);
-        if (array_key_exists($word, $this->table)) {
-          $this->table[$word]->count += $count;
+        if (array_key_exists(strtolower($word), $this->table)) {
+          $this->table[strtolower($word)]->count += $count;
         }
         else {
-          $this->table[$word] = new \StdClass();
-          $this->table[$word]->count = $count;
-          $this->table[$word]->word = $word;
+          $this->table[strtolower($word)] = new \StdClass();
+          $this->table[strtolower($word)]->count = $count;
+          $this->table[strtolower($word)]->word = $word;
         }
         $this->total_occurences += $count; 
       }
