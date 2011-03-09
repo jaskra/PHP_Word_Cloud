@@ -5,7 +5,7 @@ namespace Dreamcraft\WordCloudBundle\Tests;
 use Dreamcraft\WordCloudBundle\WordCloud;
 use Dreamcraft\WordCloudBundle\Lib\Palette;
 
-class PaletteTest extends \PHPUnit_Framework_TestCase
+class WordCloudTest extends \PHPUnit_Framework_TestCase
 {
     function testConstructor()
     {
