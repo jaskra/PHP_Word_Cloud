@@ -22,7 +22,8 @@ class Palette {
     'brown' => array('CC6600', 'FFFBD0', 'FF9900', 'C13100'), 
     'army' => array('595F23', '829F53', 'A2B964', '5F1E02', 'E15417', 'FCF141'),
     'pastel' => array('EF597B', 'FF6D31', '73B66B', 'FFCB18', '29A2C6'),
-    'red' => array('FFFF66', 'FFCC00', 'FF9900', 'FF0000'), 
+    'red' => array('FFFF66', 'FFCC00', 'FF9900', 'FF0000'),
+    'demo' => array('FFA700', 'FFDF00', 'FF4F00', 'FFEE73'),
   );
 
   /**

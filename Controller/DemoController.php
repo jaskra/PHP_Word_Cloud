@@ -24,7 +24,7 @@ Liip s'est installé en plein coeur de Lausanne, à la rue de Bourg 11-13, avec 
 Vous serez bien sûr invités prochainement à l'inauguration de ces nouveaux bureaux par l'intermédiaire de ce canal.
 EOF;
         $cloud = new WordCloud(500, 500, $font, $text);
-        $palette = Palette::getPaletteFromHex($cloud->getImage(), array('FFA700', 'FFDF00', 'FF4F00', 'FFEE73'));
+        $palette = Palette::getNamedPalette($cloud->getImage(), 'aqua');
         $cloud->render($palette);
 
         $file = tempnam(getcwd(), 'img');
