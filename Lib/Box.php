@@ -8,6 +8,8 @@
  *          Creative Commons Attribution-NonCommercial-ShareAlike 3.0
  */
 
+namespace Dreamcraft\WordCloudBundle\Lib;
+
 /**
  * An axis-aligned rectangle with collision detection
  */

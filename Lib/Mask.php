@@ -8,6 +8,8 @@
  *          Creative Commons Attribution-NonCommercial-ShareAlike 3.0
  */
 
+namespace Dreamcraft\WordCloudBundle\Lib;
+
 /**
  * List of already placed boxes used to search a free space for a new box.
  */

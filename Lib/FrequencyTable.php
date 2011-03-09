@@ -8,6 +8,8 @@
  *          Creative Commons Attribution-NonCommercial-ShareAlike 3.0
  */
 
+namespace Dreamcraft\WordCloudBundle\Lib;
+
 /**
  * Table of words and frequencies along with some additionnal properties.
  */

@@ -8,6 +8,8 @@
  *          Creative Commons Attribution-NonCommercial-ShareAlike 3.0
  */
 
+namespace Dreamcraft\WordCloudBundle;
+
 class WordCloud {
 
   private $width, $height;

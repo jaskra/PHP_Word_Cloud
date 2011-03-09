@@ -8,6 +8,8 @@
  *          Creative Commons Attribution-NonCommercial-ShareAlike 3.0
  */
 
+namespace Dreamcraft\WordCloudBundle\Lib;
+
 /**
  * Generate color palettes (arrays of allocated colors)
  */
