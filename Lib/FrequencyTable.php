@@ -123,7 +123,8 @@ class FrequencyTable {
       if (rand(1, 10) <= $this->vertical_freq) $this->table[$key]->angle = 90;
       $this->table[$key]->box = imagettfbbox ($this->table[$key]->size, $this->table[$key]->angle, $this->font, $key);
     }
-  }
+
+}
 
   /**
    * Remove unwanted characters from a word

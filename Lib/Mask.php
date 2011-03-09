@@ -27,7 +27,7 @@ class Mask {
     $this->drawn_boxes[] = $box;
   }
 
-  public function get_table() { return $this->drawn_boxes; }
+  public function getTable() { return $this->drawn_boxes; }
 
   /**
    * Test whether a box overlaps with the already drawn boxes.
@@ -53,7 +53,7 @@ class Mask {
    * @param Mask $mask The mask containing the already drawn boxes
    * @return array The x and y coordinates for the new box
    */
-  function search_place($im, $ox, $oy, $box) {
+  function searchPlace($im, $ox, $oy, $box) {
     $place_found = false;
     $i = 0; $x = $ox; $y = $oy;
     while (! $place_found) {
@@ -69,7 +69,7 @@ class Mask {
     return array($x, $y);
   }
 
-  public function get_bounding_box($margin = 10) {
+  public function getBoundingBox($margin = 10) {
     $left = null; $right = null;
     $top = null; $bottom = null;
     foreach($this->drawn_boxes as $box) {

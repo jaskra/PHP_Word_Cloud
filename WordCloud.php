@@ -12,6 +12,7 @@ namespace Dreamcraft\WordCloudBundle;
 
 use Dreamcraft\WordCloudBundle\Lib\FrequencyTable;
 use Dreamcraft\WordCloudBundle\Lib\Mask;
+use Dreamcraft\WordCloudBundle\Lib\Box;
 
 class WordCloud {
 
@@ -45,14 +46,14 @@ class WordCloud {
         $this->image = imagecreatetruecolor($width, $height);
     }
 
-  public function get_image() {
+  public function getImage() {
     return $this->image;
   }
 
   public function render($palette) {
     $i = 0;
     $positions = array();
-    
+
     foreach($this->table->getTable() as $key => $val) {
 
       // Set the center so that vertical words are better distributed
@@ -75,7 +76,7 @@ class WordCloud {
         'angle' => $val->angle,
         'size' => $val->size,
         'color' => $palette[$i % count($palette)],
-        'box' => $boxes[$key],
+        'box' => $val->box,
       );
       imagettftext($this->image, $val->size, $val->angle, $cx, $cy, $palette[$i % count($palette)], $this->font, $key);
       $this->mask->add(new Box($cx, $cy, $val->box));
@@ -92,7 +93,8 @@ class WordCloud {
     // Adjust the map to the cropped image
     $this->mask->adjust(-$x1, -$y1);
 
-    foreach($boxes = $this->getImageMap() as $map) {
+    $boxes =  $this->getImageMap();
+    foreach($boxes as $map) {
       $res['words'][$map[0]]['box'] = $map[1];
     }
 
@@ -100,10 +102,11 @@ class WordCloud {
     return $res;
   }
 
-  public function get_image_map() {
+  public function getImageMap() {
 
     $words = $this->table->getTable();
     $boxes = $this->mask->getTable();
+
     if (count($boxes) != count($words)) {
       throw new \Exception('Error: mask count <> word count');
     }
