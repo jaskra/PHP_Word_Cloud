@@ -42,8 +42,8 @@ class FrequencyTable {
     $this->font = $font;
     $this->vertical_freq = $vertical_freq;
     $words = preg_split("/[\n\r\t ]+/", $text);
-    $this->create_frequency_table($words);
-    $this->process_frequency_table();
+    $this->createFrequencyTable($words);
+    $this->processFrequencyTable();
   }
 
   public function setMinFontSize($val) {
@@ -56,30 +56,30 @@ class FrequencyTable {
       $this->max_font_size = $val;
   }
 
-  public function add_word($word, $nbr_occurence = 1) {
-    $this->insert_word($word, $nbr_occurence);
-    $this->process_frequency_table();
+  public function addWord($word, $nbr_occurence = 1) {
+    $this->insertWord($word, $nbr_occurence);
+    $this->processFrequencyTable();
   }
 
   /**
    * Return the current frequency table
    */
-  public function get_table() {
+  public function getTable() {
     return $this->table;
   }
   
-   private function insert_word($word, $count = 1) {
+   private function insertWord($word, $count = 1) {
       // Reject unwanted words
       if ((strlen($word) < 3) || (in_array(strtolower($word), $this->rejected_words))) {
         return;
       }
       else {
-        $word = $this->cleanup_word($word);
+        $word = $this->cleanupWord($word);
         if (array_key_exists($word, $this->table)) {
           $this->table[$word]->count += $count;
         }
         else {
-          $this->table[$word] = new StdClass();
+          $this->table[$word] = new \StdClass();
           $this->table[$word]->count = $count;
           $this->table[$word]->word = $word;
         }
@@ -91,10 +91,10 @@ class FrequencyTable {
    * Creates the frequency table from a text.
    * @param string $words The text containing the words
    */
-  private function create_frequency_table($words) {
+  private function createFrequencyTable($words) {
 
     foreach($words as $key => $word) {
-      $this->insert_word($word);
+      $this->insertWord($word);
     }
   }
   
@@ -102,7 +102,7 @@ class FrequencyTable {
    * Calculate word frequencies and set additionnal properties of the frequency table
    * @param integer $vertical_freq Frequency of vertical words (0 - 10, 0 = All horizontal, 10 = All vertical)
    */
-  private function process_frequency_table() {
+  private function processFrequencyTable() {
     arsort($this->table);
     $count = count($this->table);
     foreach($this->table as $key => $val) {
@@ -130,7 +130,7 @@ class FrequencyTable {
    * @param string $word The word to clenup
    * @return string The cleaned up word
    */
-  private function cleanup_word($word) {
+  private function cleanupWord($word) {
 
     $tmp = $word;
 

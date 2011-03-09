@@ -15,7 +15,7 @@ namespace Dreamcraft\WordCloudBundle\Lib;
  */
 class Palette {
 
-  private static $palettes = array(
+  protected static $palettes = array(
     'aqua' => array('BED661', '89E894', '78D5E3', '7AF5F5', '34DDDD', '93E2D5'),
     'yellow/blue' => array('FFCC00', 'CCCCCC', '666699'),
     'grey' => array('87907D', 'AAB6A2', '555555', '666666'), 
@@ -30,7 +30,7 @@ class Palette {
    * @param object $im The GD image
    * @param integer $count The number of colors in the palette
    */
-  public static function get_random_palette($im, $count = 5) {
+  public static function getRandomPalette($im, $count = 5) {
     $palette = array();
     for ($i = 0; $i < $count; $i++) {
       $palette[] = imagecolorallocate($im, rand(0, 255), rand(0, 255), rand(0, 255));
@@ -43,7 +43,7 @@ class Palette {
    * @param object $im The GD image
    * @param array $hex_array An array of hexadecimal color strings
    */
-  public static function get_palette_from_hex($im, $hex_array) {
+  public static function getPaletteFromHex($im, $hex_array) {
     $palette = array();
     foreach($hex_array as $hex) {
     if (strlen($hex) != 6) throw new Exception("Invalid palette color '$hex'");
@@ -54,15 +54,25 @@ class Palette {
     }
     return $palette;
   }
-  
-  public static function get_named_palette($im, $name) {
+
+  /**
+   * Get a palette by name
+   * @param resource $im
+   * @param string $name
+   * @return array
+   */
+  public static function getNamedPalette($im, $name) {
     if (array_key_exists($name, self::$palettes)) {
-      return self::get_palette_from_hex($im, self::$palettes[$name]);
+      return self::getPaletteFromHex($im, self::$palettes[$name]);
     }
-    return self::get_named_palette($im, 'grey');
+    return self::getPaletteFromHex($im, self::$palettes['grey']);
   }
-  
-  public static function list_named_palettes() {
+
+  /**
+   * Get the name of the defined named palettes
+   * @return array
+   */
+  public static function listNamedPalettes() {
     return array_keys(self::$palettes);
   }
 }

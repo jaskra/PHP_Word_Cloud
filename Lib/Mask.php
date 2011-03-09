@@ -10,6 +10,8 @@
 
 namespace Dreamcraft\WordCloudBundle\Lib;
 
+use Dreamcraft\WordCloudBundle\Lib\Box;
+
 /**
  * List of already placed boxes used to search a free space for a new box.
  */

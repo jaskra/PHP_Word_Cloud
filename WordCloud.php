@@ -10,6 +10,9 @@
 
 namespace Dreamcraft\WordCloudBundle;
 
+use Dreamcraft\WordCloudBundle\Lib\FrequencyTable;
+use Dreamcraft\WordCloudBundle\Lib\Mask;
+
 class WordCloud {
 
   private $width, $height;
@@ -18,24 +21,29 @@ class WordCloud {
   private $table;
   private $image;
 
-  public function __construct($width, $height, $font, $text, $vertical_freq = FrequencyTable::WORDS_MAINLY_HORIZONTAL) {
-    $this->width = $width;
-    $this->height = $height;
-    $this->font = $font;
+    public function __construct($width, $height, $font, $text, $vertical_freq = FrequencyTable::WORDS_MAINLY_HORIZONTAL)
+    {
+        if (! file_exists($font)) {
+            throw new \InvalidArgumentException("Font file not found '$font'");
+        }
 
-    $this->mask = new Mask();
-    $this->table = new FrequencyTable($font, $text, $vertical_freq);
-    $this->table->setMinFontSize(10);
-    $this->table->setMaxFontSize(72);
-    // $this->table = new FrequencyTable($font);//, $text);
-    // $this->table->add_word('word1');
-    // $this->table->add_word('word2', 2);
-    // $this->table->add_word('word3');
-    // $this->table->add_word('word4', 4);
-    // $this->table->add_word('word5');
-    // for($i = 6; $i <= 20; $i++) $this->table->add_word('word'.$i, $i % 5);
-    $this->image = imagecreatetruecolor($width, $height);
-  }
+        $this->width = $width;
+        $this->height = $height;
+        $this->font = $font;
+
+        $this->mask = new Mask();
+        $this->table = new FrequencyTable($font, $text, $vertical_freq);
+        $this->table->setMinFontSize(10);
+        $this->table->setMaxFontSize(72);
+        // $this->table = new FrequencyTable($font);//, $text);
+        // $this->table->add_word('word1');
+        // $this->table->add_word('word2', 2);
+        // $this->table->add_word('word3');
+        // $this->table->add_word('word4', 4);
+        // $this->table->add_word('word5');
+        // for($i = 6; $i <= 20; $i++) $this->table->add_word('word'.$i, $i % 5);
+        $this->image = imagecreatetruecolor($width, $height);
+    }
 
   public function get_image() {
     return $this->image;
@@ -45,7 +53,7 @@ class WordCloud {
     $i = 0;
     $positions = array();
     
-    foreach($this->table->get_table() as $key => $val) {
+    foreach($this->table->getTable() as $key => $val) {
 
       // Set the center so that vertical words are better distributed
       if ($val->angle == 0) {
@@ -58,7 +66,7 @@ class WordCloud {
       }
 
       // Search the place for the next word
-      list($cx, $cy) = $this->mask->search_place($this->image, $cx, $cy, $val->box);
+      list($cx, $cy) = $this->mask->searchPlace($this->image, $cx, $cy, $val->box);
 
       // Draw the word
       $res['words'][$key] = array(
@@ -75,7 +83,7 @@ class WordCloud {
     }
 
     // Crop the image
-    list($x1, $y1, $x2, $y2) = $this->mask->get_bounding_box();
+    list($x1, $y1, $x2, $y2) = $this->mask->getBoundingBox();
     $image2 = imagecreatetruecolor(abs($x2 - $x1), abs($y2 - $y1));
     imagecopy($image2 ,$this->image, 0, 0, $x1, $y1, abs($x2 - $x1), abs($y2 - $y1));
     imagedestroy($this->image);
@@ -84,7 +92,7 @@ class WordCloud {
     // Adjust the map to the cropped image
     $this->mask->adjust(-$x1, -$y1);
 
-    foreach($boxes = $this->get_image_map() as $map) {
+    foreach($boxes = $this->getImageMap() as $map) {
       $res['words'][$map[0]]['box'] = $map[1];
     }
 
@@ -94,10 +102,10 @@ class WordCloud {
 
   public function get_image_map() {
 
-    $words = $this->table->get_table();
-    $boxes = $this->mask->get_table();
+    $words = $this->table->getTable();
+    $boxes = $this->mask->getTable();
     if (count($boxes) != count($words)) {
-      throw new Exception('Error: mask count <> word count');
+      throw new \Exception('Error: mask count <> word count');
     }
 
     $map = array();
